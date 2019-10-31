@@ -1,6 +1,9 @@
 https://jobs.crossover.com/application
 https://jobs.crossover.com/application?username=cramwordplay@gmail.com&amp;password=pass106d3
 
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -120,8 +123,8 @@ https://jobs.crossover.com/application?username=cramwordplay@gmail.com&amp;passw
             <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="desc">Question Number</label>
-                            <input id="desc" class="form-control" type="text" name="">
+                            <label for="desc2">Question Number</label>
+                            <input id="desc2" class="form-control" type="number">
                         </div>
                     </div> 
             </div>
@@ -129,12 +132,12 @@ https://jobs.crossover.com/application?username=cramwordplay@gmail.com&amp;passw
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="desc">Question</label>
-                            <input id="desc" class="form-control" type="text" name="" placeholder="Type Assignment Question">
+                            <input id="desc" class="form-control" type="text" placeholder="Type Assignment Question">
                             </div>
                     </div> 
             </div>
                 <div class="col-md-12 text-center">
-                    <a class="btn btn-warning" href="">SUBMIT</a>
+                    <button class="newBtn">SUBMIT</button>
                 </div>
     </form>
 
@@ -153,209 +156,146 @@ https://jobs.crossover.com/application?username=cramwordplay@gmail.com&amp;passw
 <script>
 
 class Review {
-//HERE   ====== ***HERE***
-constructor(name, title, msg) {
-this.name = name;
-this.msg = msg;
+    constructor(name, msg) {
+    this.name = name;
+    this.msg = msg;
 
-//HERE (Complete line)
-this.title = title;
-}
+    }
 }
 
 class UI {
-addReviewToList(review) {
-const list = document.querySelector('.dynamic');
+    addReviewToList(review) {
+        const list = document.querySelector('.dynamic');
 
-const div = document.createElement('div');
-const h4 = document.createElement('h4');
-const par = document.createElement('p');
-const btn = document.createElement('button');
-const btndiv = document.createElement('div');
-
-//HERE (Complete line)
-const titlediv = document.createElement('h6');
+        const div = document.createElement('div');
+        const h4 = document.createElement('h4');
+        const par = document.createElement('p');
+        const btn = document.createElement('button');
+        const btndiv = document.createElement('div');
 
 
-h4.textContent = `${review.name}`;  
-par.textContent = `${review.msg}`;
-btn.textContent = 'Delete';
 
-//HERE (Complete line)
-titlediv.textContent = `${review.title}`;
+        h4.textContent = `Question ${review.name}`;  
+        par.textContent = `${review.msg}`;
+        btn.textContent = 'Delete';
 
-div.classList.add("divHolder");
-h4.classList.add("nameHolder");
-par.classList.add("parHolder");
-btn.classList.add("delete");
-btndiv.classList.add("test");
 
-//HERE (Complete line)
-titlediv.classList.add('new-title');
+        div.classList.add("divHolder");
+        h4.classList.add("nameHolder");
+        par.classList.add("parHolder");
+        btn.classList.add("delete");
+        btndiv.classList.add("test");
 
-btndiv.appendChild(btn)
-div.appendChild(h4);
 
-//HERE (Complete line)
-div.appendChild(titlediv);
-div.appendChild(par)
-div.appendChild(btndiv)
-list.appendChild(div)
-}
+        btndiv.appendChild(btn)
+        div.appendChild(h4);
 
-showAlert(message, className) {
-const div = document.createElement('div');
-div.className = `alert ${className}`;
-div.appendChild(document.createTextNode(message));
-const container = document.querySelector('.container');
-const form = document.querySelector('#review-form');
-container.insertBefore(div, form);
+        div.appendChild(par)
+        div.appendChild(btndiv)
+        list.appendChild(div)
+    }
 
-setTimeout(function(){
-document.querySelector('.alert').remove();
-}, 3000);
-}
+    showAlert(message, className) {
+        const div = document.createElement('div');
+        div.className = `alert ${className}`;
+        div.appendChild(document.createTextNode(message));
+        const container = document.querySelector('.container');
+        const form = document.querySelector('#review-form');
+        container.insertBefore(div, form);
 
-deleteReview(target) {
-if(target.className === 'delete') {
-target.parentElement.parentElement.remove();
-}
-}
+        setTimeout(function(){
+        document.querySelector('.alert').remove();
+        }, 3000);
+    }
 
-clearFields() {
-document.getElementById('name').value = '';
-document.getElementById('msg').value = '';
+    deleteReview(target) {
+        if(target.className === 'delete') {
+            target.parentElement.parentElement.remove();
+        }
+    }
 
-//HERE (Complete line)
-document.getElementById('title').value = '';
-}
+    clearFields() {
+        document.getElementsByClassName('name').value = '';
+
+        document.getElementById('desc2').value = '';
+        document.getElementById('desc').value = '';
+    }
 }
 
 class Store {
-static getReviews() {
-let reviews;
-if(localStorage.getItem('reviews') === null) {
-reviews = [];
-} else {
-reviews = JSON.parse(localStorage.getItem('reviews'));
-}
+    static getReviews() {
+        let reviews;
+        if(localStorage.getItem('reviews') === null) {
+            reviews = [];
+        } else {
+            reviews = JSON.parse(localStorage.getItem('reviews'));
+        }
 
-return reviews;
-}
+    return reviews;
+    }
 
-static displayReviews() {
-const reviews = Store.getReviews();
+    static displayReviews() {
+        const reviews = Store.getReviews();
 
-reviews.forEach(function(review){
-const ui  = new UI;
+        reviews.forEach(function(review){
+            const ui  = new UI;
 
-ui.addReviewToList(review);
-});
-}
+            ui.addReviewToList(review);
+        });
+    }
 
-static addReview(review) {
-const reviews = Store.getReviews();
+    static addReview(review) {
+        const reviews = Store.getReviews();
 
-reviews.push(review);
+        reviews.push(review);
 
-localStorage.setItem('reviews', JSON.stringify(reviews));
-}
+        localStorage.setItem('reviews', JSON.stringify(reviews));
+    }
 
-static removeReview(msg) {
-const reviews = Store.getReviews();
+    static removeReview(msg) {
+        const reviews = Store.getReviews();
 
-reviews.forEach(function(review, index){
-reviews.splice(index, 1);
+        reviews.forEach(function(review, index){
+            reviews.splice(index, 1);
 
-});
+        });
 
-localStorage.setItem('reviews', JSON.stringify(reviews));
-}
+        localStorage.setItem('reviews', JSON.stringify(reviews));
+    }
 }
 
 document.addEventListener('DOMContentLoaded', Store.displayReviews);
 
-document.querySelector('.btn btn-warning').addEventListener('click', function(e){
-const name = document.getElementById('name').value;
-const msg = document.getElementById('msg').value;
+document.querySelector('.newBtn').addEventListener('click', function(e){
 
-//HERE (Complete line)
-const title = document.getElementById('title').value;
+    const name = document.getElementById('desc2').value;
+    const msg = document.getElementById('desc').value;
 
-//HERE    ================  ** HERE **
-let review = new Review(name, title, msg);  
-const ui = new UI();
+    let review = new Review(name, msg);  
+    const ui = new UI();
 
-//HERE      =============   *** HERE ***
-if(name === '' || msg === '' || title === '') {
-ui.showAlert('Please fill in all fields', 'error');
-} else {
-ui.addReviewToList(review);
-Store.addReview(review);
-ui.showAlert('Comment Submitted!', 'success');
-ui.clearFields();
+    if(name === '' || msg === '' ) {
+    ui.showAlert('Please fill in all fields', 'error');
+    } else {
+    ui.addReviewToList(review);
+    Store.addReview(review);
+    ui.showAlert('Comment Submitted!', 'success');
+    ui.clearFields();
 }
 
 e.preventDefault();
 });
-                    // ****Double click edit HERE**** (Change from 'click' to 'dbclick')
-document.querySelector('.dynamic').addEventListener('dblclick' , function(e){  
-const ui = new UI();
-ui.deleteReview(e.target);
-Store.removeReview(e.target.parentElement.parentElement.textContent);
-ui.showAlert('Comment Deleted!', 'success');
 
-e.preventDefault();
+document.querySelector('.dynamic').addEventListener('dblclick' , function(e){  
+    const ui = new UI();
+    ui.deleteReview(e.target);
+    Store.removeReview(e.target.parentElement.parentElement.textContent);
+    ui.showAlert('Comment Deleted!', 'success');
+
+    e.preventDefault();
 });
 
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# TutorDashboard
-
-
-https://cramwordplay.github.io/StartNg-2/tutor-dashboard.html
-
-https://docs.google.com/forms/u/2/d/e/1FAIpQLSe_jMpA9lbiGE1Vcyn70TkS0hCGZKOnXXz8Z4YN2C9-Sh4Lwg/viewform?usp=pp_url
-
-https://www.pivotaltracker.com/n/projects/2410002/stories/169433709
-
-
-
-https://docs.google.com/forms/d/e/1FAIpQLScZLOQ89sXLDAFZBGgrMK_eGrXospAoFVhUSO_IHi1YL9vT7Q/viewform?usp=pp_url
